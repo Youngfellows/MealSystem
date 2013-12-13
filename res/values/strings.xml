@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="tag_main_func" type="id"></item>
+
+    <string name="app_name">MealSystem</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="main_title">无线点餐系统</string>
+
+</resources>

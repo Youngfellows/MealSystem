@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MealMenuActivity" >
+
+    <RelativeLayout
+        android:id="@+id/meal_menu_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="返回" />
+
+        <Button
+            android:id="@+id/submit_order_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="提交订单" />
+
+        <Button
+            android:id="@+id/check_order_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/submit_order_btn"
+            android:gravity="center"
+            android:text="查看订单" />
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/meal_menu_headers"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/meal_menu_title_rl"
+        class="com.cduestc.mealsystem.ui.HeaderFragment" />
+
+    <FrameLayout
+        android:id="@+id/meal_menu_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/meal_menu_title_rl"
+        android:layout_toRightOf="@id/meal_menu_headers"
+        android:background="?android:attr/detailsElementBackground" />
+
+    <FrameLayout
+        android:id="@+id/meal_menu_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/detailsElementBackground"
+        android:visibility="gone" />
+
+</RelativeLayout>
