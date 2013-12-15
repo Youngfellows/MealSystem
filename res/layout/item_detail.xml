@@ -8,14 +8,18 @@
         android:id="@+id/item_detail_pic_iv"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/ic_launcher"
+        android:clickable="false"
+        android:focusable="false" />
 
     <TextView
         android:id="@+id/item_detail_name_tv"
         android:layout_width="75dp"
-        android:singleLine="true"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_detail_pic_iv"
+        android:clickable="false"
+        android:focusable="false"
+        android:singleLine="true"
         android:text="name" />
 
     <TextView
@@ -23,14 +27,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_detail_name_tv"
+        android:clickable="false"
+        android:focusable="false"
         android:text="10.0" />
-    
-    <CheckBox 
+
+    <CheckBox
         android:id="@+id/item_detail_add_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/item_detail_pic_iv"
         android:layout_alignBottom="@id/item_detail_price_tv"
-        />
+        android:layout_alignRight="@id/item_detail_pic_iv"
+        android:clickable="false"
+        android:focusable="false" />
 
 </RelativeLayout>

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.cduestc.mealsystem.bean.FoodInfo;
 import com.cduestc.mealsystem.bean.MainFuncInfo;
 import com.cduestc.mealsystem.bean.MainMenuInfo;
+import com.cduestc.mealsystem.bean.OrderInfo;
+import com.cduestc.mealsystem.bean.TableInfo;
 
 public class DataFactory {
 
@@ -25,6 +27,12 @@ public class DataFactory {
 		return mainMenuList;
 	}
 
+	/**
+	 * 根据主目录id获取详细菜单目录
+	 * 
+	 * @param mainMenuId
+	 * @return
+	 */
 	public static ArrayList<FoodInfo> getDetailMenu(String mainMenuId) {
 		ArrayList<FoodInfo> foodInfoList = new ArrayList<FoodInfo>();
 		switch (Integer.parseInt(mainMenuId)) {
@@ -100,6 +108,23 @@ public class DataFactory {
 			break;
 		}
 		return foodInfoList;
+	}
+
+	private static ArrayList<TableInfo> tableInfoList;
+
+	/**
+	 * 获取餐桌List
+	 * 
+	 * @return
+	 */
+	public static ArrayList<TableInfo> getTableInfoList() {
+		if (tableInfoList == null) {
+			tableInfoList = new ArrayList<TableInfo>();
+			for (int i = 0; i < 10; i++) {
+				tableInfoList.add(new TableInfo(0, i));
+			}
+		}
+		return tableInfoList;
 	}
 
 }

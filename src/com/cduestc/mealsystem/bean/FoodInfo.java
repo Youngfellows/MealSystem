@@ -1,8 +1,11 @@
 package com.cduestc.mealsystem.bean;
 
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.widget.Toast;
 
-public class FoodInfo {
+public class FoodInfo  {
 
 	String id;
 	String name;
@@ -61,6 +64,48 @@ public class FoodInfo {
 
 	public void setPic(Drawable pic) {
 		this.pic = pic;
+	}
+
+	public void addNum() {
+		this.num++;
+	}
+
+	public void subNum() {
+		if (this.num > 1) {
+			this.num--;
+		}
+	}
+
+	/**
+	 * 重写equals方法，只有当id相同的时候，才返回true
+	 */
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		if (o instanceof FoodInfo) {
+			if (((FoodInfo) o).getId().equals(this.id)) {
+				return true;
+			}
+		} else {
+			return false;
+		}
+		return super.equals(o);
+	}
+
+	/**
+	 * 将一个FoodInfo的内容复制到新的FoodInfo
+	 * 
+	 * @param foodInfo
+	 *            被复制的FoodInfo
+	 * @param newFoodInfo
+	 *            复制的FoodInfo
+	 */
+	public static void copyFoodInfo(FoodInfo foodInfo, FoodInfo newFoodInfo) {
+		newFoodInfo.setId(foodInfo.getId());
+		newFoodInfo.setName(foodInfo.getName());
+		newFoodInfo.setNum(foodInfo.getNum());
+		newFoodInfo.setPic(foodInfo.getPic());
+		newFoodInfo.setPrice(foodInfo.getPrice());
 	}
 
 }

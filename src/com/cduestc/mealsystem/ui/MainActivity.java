@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 	/**
 	 * 获取主界面title和pic
 	 * 
-	 * @return 
+	 * @return
 	 */
 	private ArrayList<MainFuncInfo> getMainFuncs() {
 		ArrayList<MainFuncInfo> mainfuncList = new ArrayList<MainFuncInfo>();
@@ -70,10 +70,14 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated method stub
 
 			String mainFunc = (String) view.getTag(R.id.tag_main_func);
-
+			Intent intent;
 			if (Constants.MAIN_FUNCTION_ORDERING.equals(mainFunc)) {
-				Intent intent = new Intent(MainActivity.this,
-						MealMenuActivity.class);
+				intent = new Intent(MainActivity.this, MealMenuActivity.class);
+				startActivity(intent);
+			} else if (Constants.MAIN_FUNCTION_FREE_TABEL.equals(mainFunc)) {
+				intent = new Intent(MainActivity.this,
+						TableChooseActivity.class);
+				intent.putExtra("fromActivity", "MainActivity");
 				startActivity(intent);
 			}
 
