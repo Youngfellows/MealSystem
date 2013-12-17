@@ -31,6 +31,10 @@
             android:name="com.cduestc.mealsystem.ui.TableChooseActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name="com.cduestc.mealsystem.ui.OrderDetailsActivity"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>

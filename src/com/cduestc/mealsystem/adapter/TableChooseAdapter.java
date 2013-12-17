@@ -60,7 +60,6 @@ public class TableChooseAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Log.i("tag", "flag = " + tableInfoList.get(position).getFlag());
 		if (tableInfoList.get(position).getFlag() == 0) {
 			holder.chooseBtn.setText(R.string.notif_vacancy);
 		} else {

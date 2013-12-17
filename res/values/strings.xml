@@ -9,10 +9,13 @@
     <string name="hello_world">Hello world!</string>
     
     <string name="main_title">无线点餐系统</string>
+    <string name="input_order_num">请输入要查询的订单号</string>
+    <string name="order_details_title">订单详情</string>
     <string name="choose_table_title">选择餐桌</string>
     <string name="notif_submit_success">提交订单成功!</string>
     <string name="notif_vacancy">空位中</string>
     <string name="notif_eating">就餐中</string>
     <string name="notif_occupied">当前餐桌有人就餐</string>
+    <string name="notif_order_not_found">未找到对应订单</string>
 
 </resources>

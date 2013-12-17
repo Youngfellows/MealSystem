@@ -3,9 +3,8 @@ package com.cduestc.mealsystem.bean;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
 
-public class FoodInfo  {
+public class FoodInfo implements Parcelable {
 
 	String id;
 	String name;
@@ -24,6 +23,14 @@ public class FoodInfo  {
 		this.price = price;
 		this.num = num;
 		this.pic = pic;
+	}
+
+	// 注意读取顺序
+	public FoodInfo(Parcel source) {
+		this.id = source.readString();
+		this.name = source.readString();
+		this.price = source.readFloat();
+		this.num = source.readInt();
 	}
 
 	public String getId() {
@@ -107,5 +114,35 @@ public class FoodInfo  {
 		newFoodInfo.setPic(foodInfo.getPic());
 		newFoodInfo.setPrice(foodInfo.getPrice());
 	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeString(this.id);
+		dest.writeString(this.name);
+		dest.writeFloat(this.price);
+		dest.writeInt(this.num);
+	}
+
+	// 实例化静态内部对象CREATOR实现接口FoodInfo.Creator
+	public static final FoodInfo.Creator<FoodInfo> CREATOR = new Creator<FoodInfo>() {
+
+		@Override
+		public FoodInfo[] newArray(int size) {
+			return new FoodInfo[size];
+		}
+
+		// 将Parcel对象反序列化为OrderInfo
+		@Override
+		public FoodInfo createFromParcel(Parcel source) {
+			return new FoodInfo(source);
+		}
+	};
 
 }

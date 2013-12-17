@@ -12,44 +12,49 @@ public class OrderInfo implements Parcelable {
 
 	private ArrayList<FoodInfo> orderFoodInfoList;
 	private String id;
-	// 判断订单是否被处理
-	private int isTake; // 0,未处理 1处理
+	// 判断订单是否被支付
+	private int isPaid; // 0,未支付 1支付
 	private String mOrderTime;
-	private String tableNum;
+	private int tableNum = -1;
 	private int customerSum = 1; // 默认一位顾客
+
+	public static final int UNPAID = 0;
+	public static final int PAID = 1;
 
 	public OrderInfo() {
 		this.orderFoodInfoList = new ArrayList<FoodInfo>();
 		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy/MM/dd HH:mm:ss     ");
+				"yyyy/MM/dd HH:mm:ss");
 		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
 		this.mOrderTime = formatter.format(curDate);
-		SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss     ");
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date curDat = new Date(System.currentTimeMillis());// 获取当前时间
 		this.id = f.format(curDat);
 	}
 
 	// 注意读取顺序
 	public OrderInfo(Parcel source) {
-		this.isTake = source.readInt();
-		this.tableNum = source.readString();
+		source.readTypedList(new ArrayList<FoodInfo>(), FoodInfo.CREATOR);
+		this.id = source.readString();
+		this.isPaid = source.readInt();
+		this.tableNum = source.readInt();
 		this.customerSum = source.readInt();
 		this.mOrderTime = source.readString();
 	}
 
-	public int getIsTake() {
-		return isTake;
+	public int getIsPaid() {
+		return isPaid;
 	}
 
-	public void setIsTake(int isTake) {
-		this.isTake = isTake;
+	public void setIsPaid(int isPaid) {
+		this.isPaid = isPaid;
 	}
 
-	public String getTableNum() {
+	public int getTableNum() {
 		return tableNum;
 	}
 
-	public void setTableNum(String tableNum) {
+	public void setTableNum(int tableNum) {
 		this.tableNum = tableNum;
 	}
 
@@ -99,6 +104,19 @@ public class OrderInfo implements Parcelable {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		if (o instanceof OrderInfo) {
+			if (((OrderInfo) o).getId().equals(this.id)) {
+				return true;
+			}
+		} else {
+			return false;
+		}
+		return super.equals(o);
+	}
+
+	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -107,8 +125,10 @@ public class OrderInfo implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		dest.writeInt(this.isTake);
-		dest.writeString(this.tableNum);
+		dest.writeTypedList(this.orderFoodInfoList);
+		dest.writeString(this.id);
+		dest.writeInt(this.isPaid);
+		dest.writeInt(this.tableNum);
 		dest.writeInt(this.customerSum);
 		dest.writeString(this.mOrderTime);
 	}
@@ -127,18 +147,5 @@ public class OrderInfo implements Parcelable {
 			return new OrderInfo(source);
 		}
 	};
-
-	@Override
-	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		if (o instanceof OrderInfo) {
-			if (((OrderInfo) o).getId().equals(this.id)) {
-				return true;
-			}
-		} else {
-			return false;
-		}
-		return super.equals(o);
-	}
 
 }

@@ -1,10 +1,8 @@
 package com.cduestc.mealsystem.ui;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.cduestc.mealsystem.R;
 import com.cduestc.mealsystem.bean.OrderInfo;
+import com.cduestc.mealsystem.common.Constants;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,8 +21,8 @@ public class MealMenuActivity extends Activity {
 	private Button backBtn;
 	private Button checkOrderBtn;
 	private Button submitOrderBtn;
-
 	private FrameLayout orderFl;
+	private Bundle tableInfoBundle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +30,11 @@ public class MealMenuActivity extends Activity {
 		setContentView(R.layout.activity_meal_menu);
 
 		orderInfo = new OrderInfo();
+		tableInfoBundle = getIntent().getExtras();
 
 		findViews();
 		setLiseners();
-		
+
 	}
 
 	private void findViews() {
@@ -69,6 +68,7 @@ public class MealMenuActivity extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			int id = v.getId();
+			Bundle args = new Bundle();
 			OrderFragment sof;
 			FragmentTransaction ft;
 			switch (id) {
@@ -77,8 +77,9 @@ public class MealMenuActivity extends Activity {
 				break;
 			case R.id.check_order_btn:
 				// 跳转到订单详情界面
-				sof = OrderFragment
-						.newInstance(OrderFragment.CHECK_ORDER_DETAILS);
+				args.putInt("type", OrderFragment.CHECK_ORDER_DETAILS);
+				sof = OrderFragment.newInstance();
+				sof.setArguments(args);
 				ft = getFragmentManager().beginTransaction();
 				ft.replace(R.id.meal_menu_order, sof);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -86,9 +87,17 @@ public class MealMenuActivity extends Activity {
 				displayOrderFl(true);
 				break;
 			case R.id.submit_order_btn:
+				// 放置餐桌信息
+				if (tableInfoBundle != null) {
+					tableInfoBundle.putInt("type",
+							OrderFragment.SUBMIT_ORDER_DETAILS);
+					args = tableInfoBundle;
+				} else {
+					args.putInt("type", OrderFragment.SUBMIT_ORDER_DETAILS);
+				}
 				// 提交订单到厨房，保存订单到数据库
-				sof = OrderFragment
-						.newInstance(OrderFragment.SUBMIT_ORDER_DETAILS);
+				sof = OrderFragment.newInstance();
+				sof.setArguments(args);
 				ft = getFragmentManager().beginTransaction();
 				ft.replace(R.id.meal_menu_order, sof);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -97,14 +106,13 @@ public class MealMenuActivity extends Activity {
 				break;
 			}
 		}
-
 	}
 
 	/**
-	 * 检查订单，订单被处理或者订单为空直接退出，没有处理弹出提示
+	 * 检查订单，订单被支付或者订单为空直接退出，没有支付弹出提示
 	 */
 	private void checkOrder() {
-		if (orderInfo.getIsTake() == 1
+		if (orderInfo.getIsPaid() == OrderInfo.PAID
 				|| orderInfo.getOrderFoodInfoList().isEmpty()) {
 			finish();
 		} else {

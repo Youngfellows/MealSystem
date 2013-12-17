@@ -3,18 +3,21 @@ package com.cduestc.mealsystem.common;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.cduestc.mealsystem.bean.FoodInfo;
 import com.cduestc.mealsystem.bean.OrderInfo;
 
 public class OrderInfoManger {
 
 	private static OrderInfoManger mInstance;
 	private Context ctx;
-	private ArrayList<OrderInfo> unpayOrderList;
+	private ArrayList<OrderInfo> unpaidOrderList;
+	private OrderInfo curOrder;
 
 	private OrderInfoManger(Context ctx) {
 		this.ctx = ctx;
-		this.unpayOrderList = new ArrayList<OrderInfo>();
+		this.unpaidOrderList = new ArrayList<OrderInfo>();
 	}
 
 	public static OrderInfoManger getInstance(Context ctx) {
@@ -22,6 +25,14 @@ public class OrderInfoManger {
 			mInstance = new OrderInfoManger(ctx);
 		}
 		return mInstance;
+	}
+
+	public OrderInfo getCurOrder() {
+		return curOrder;
+	}
+
+	public void setCurOrder(OrderInfo curOrderInfo) {
+		this.curOrder = curOrderInfo;
 	}
 
 	/**
@@ -35,12 +46,40 @@ public class OrderInfoManger {
 		return true;
 	}
 
-	public boolean addToUnpayOrderList(OrderInfo orderInfo) {
-		return unpayOrderList.add(orderInfo);
+	/**
+	 * 添加新订单到未付款订单列表
+	 * 
+	 * @param orderInfo
+	 *            未付款的新订单
+	 * @return
+	 */
+	public boolean addUnpaidOrder(OrderInfo orderInfo) {
+		return unpaidOrderList.add(orderInfo);
 	}
 
-	public boolean removeFromUnpayOrderList(OrderInfo orderInfo) {
-		return unpayOrderList.remove(orderInfo);
+	public ArrayList<OrderInfo> getUnpaidOrderList() {
+		return this.unpaidOrderList;
+	}
+
+	public boolean checkOutOrder(OrderInfo orderInfo) {
+		// 保存到数据库
+		saveOrder(orderInfo);
+		return unpaidOrderList.remove(orderInfo);
+	}
+
+	/**
+	 * 根据订单号查询订单
+	 * 
+	 * @param orderId
+	 * @return
+	 */
+	// 现在只能查未付款订单
+	public boolean quiryOrder(String orderId) {
+		for (OrderInfo orderInfo : unpaidOrderList) {
+			if (orderInfo.getId().equals(orderId))
+				return true;
+		}
+		return false;
 	}
 
 }

@@ -6,6 +6,8 @@ import com.cduestc.mealsystem.R;
 import com.cduestc.mealsystem.adapter.OrderDetailsAdapter;
 import com.cduestc.mealsystem.bean.FoodInfo;
 import com.cduestc.mealsystem.bean.OrderInfo;
+import com.cduestc.mealsystem.common.Constants;
+import com.cduestc.mealsystem.common.OrderInfoManger;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -32,16 +34,17 @@ public class OrderFragment extends Fragment {
 	private Button modifyBtn;
 	private ListView detailsListView;
 	private OrderDetailsAdapter adapter;
-	private int type;
+	private OrderInfoManger orderInfoManger;
+	private int type; // 判断是check订单还是submit订单
 
 	public static final int CHECK_ORDER_DETAILS = 0;
 	public static final int SUBMIT_ORDER_DETAILS = 1;
 
-	public static OrderFragment newInstance(int type) {
+	public static OrderFragment newInstance() {
 		OrderFragment of = new OrderFragment();
-		Bundle args = new Bundle();
-		args.putInt("type", type);
-		of.setArguments(args);
+		// Bundle args = new Bundle();
+		// args.putInt("type", type);
+		// of.setArguments(args);
 		return of;
 	}
 
@@ -60,6 +63,7 @@ public class OrderFragment extends Fragment {
 		}
 		// type
 		this.type = getArguments().getInt("type");
+		this.orderInfoManger = OrderInfoManger.getInstance(getActivity());
 	}
 
 	@Override
@@ -126,29 +130,50 @@ public class OrderFragment extends Fragment {
 			int id = v.getId();
 			switch (id) {
 			case R.id.cancel_btn:
+
 				// 还原orderInfo里面的foodInfoList
 				orderFoodInfoList.clear();
 				orderFoodInfoList.addAll(initialFoodInfoList);
 				((MealMenuActivity) getActivity()).displayOrderFl(false);
 				break;
 			case R.id.modify_btn:
+
 				// 保存修改并退出
 				changeDetailContent();
 				((MealMenuActivity) getActivity()).displayOrderFl(false);
 				break;
 			case R.id.submit_btn:
+
+				Bundle args = getArguments();
+				// 如果是先选桌，则直接提交订单
+				int tableNum = args.getInt(Constants.TABLE_NUM, -1);
+				if (tableNum != -1) {
+					orderInfo.setTableNum(tableNum);
+					orderInfoManger.addUnpaidOrder(orderInfo);
+					Log.i("tag", "orderId = " + orderInfo.getId());
+					Toast.makeText(getActivity(),
+							R.string.notif_submit_success, Toast.LENGTH_SHORT)
+							.show();
+					Intent intent = new Intent(getActivity(),
+							MainActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+					startActivity(intent);
+					getActivity().finish();
+					return;
+				}
 				Intent intent = new Intent(getActivity(),
 						TableChooseActivity.class);
-				intent.putExtra("orderInfo", orderInfo);
+				orderInfoManger.setCurOrder(orderInfo);
+				// intent.putExtra("orderInfo", orderInfo);
 				startActivity(intent);
 				getActivity().finish();
 			case R.id.cancel_submit_btn:
+
 				((MealMenuActivity) getActivity()).displayOrderFl(false);
 				break;
 			}
 
 		}
-
 	}
 
 	private void changeDetailContent() {

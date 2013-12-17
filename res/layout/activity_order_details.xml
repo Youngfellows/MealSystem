@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="10dp" >
+
+    <TextView
+        android:id="@+id/order_details_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/order_details_title" />
+
+    <TextView
+        android:id="@+id/order_details_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_details_title_tv"
+        android:text="11111111111" />
+
+    <TextView
+        android:id="@+id/order_details_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/order_details_title_tv"
+        android:text="2013/12/12/11:30:12" />
+
+    <TextView
+        android:id="@+id/order_details_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_details_id_tv"
+        android:layout_marginTop="10dp"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/certen_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/order_details_checkout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/certen_btn"
+        android:text="结账" />
+
+    <Button
+        android:id="@+id/order_details_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/certen_btn"
+        android:text="取消" />
+
+    <TextView
+        android:id="@+id/order_details_total_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/certen_btn"
+        android:layout_alignParentRight="true"
+        android:text="总计 100 元" />
+
+    <ListView
+        android:id="@+id/order_details_foods_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/order_details_total_tv"
+        android:layout_below="@id/order_details_num_tv" />
+
+</RelativeLayout>
